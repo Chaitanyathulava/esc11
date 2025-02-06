@@ -1,55 +1,26 @@
 trigger:
-
-- master
-
+  - main
+  - master
 
 pool:
-
-
   vmImage: 'ubuntu-latest'
 
-
-strategy:
-
-
-  matrix:
-
-
-    Python27:
-
-
-      python.version: '2.7'
-
-
-
 steps:
+  - checkout: self
 
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.8'  # Directly specify Python 3.8
 
-- task: UsePythonVersion@0
+  - script: |
+      python -m pip install --upgrade pip
+      if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    displayName: 'Install Dependencies'
 
+  - script: python sum.py
+    displayName: 'Run Python Script'
 
-  inputs:
-
-
-    versionSpec: '$(python.version)'
-
-
-  displayName: 'Use Python $(python.version)'
-
-
-- script: python "add.py"
-
-
-
-- task: PythonScript@0
-
-
-  inputs:
-
-
-    scriptSource: 'inline'
-
-
-    script: |
-      print('This is Section 1 Azure Demonstration')
-      print('KL-CSE')
+  - script: |
+      echo "This is Section 1 Azure Demonstration"
+      echo "KL-CSE"
+    displayName: 'Inline Python Execution'
