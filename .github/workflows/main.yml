@@ -33,7 +33,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run Python Script
-        run: python sum.py  # Ensure sum.py is compatible with Python 3
+        run: python add.py  # Ensure sum.py is compatible with Python 3
 
       - name: Inline Python Execution
         run: |
