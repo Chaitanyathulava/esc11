@@ -12,11 +12,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Use the latest available runner
 
     strategy:
       matrix:
-        python-version: [2.7]
+        python-version: [3.8]  # Updated to Python 3.8
 
     steps:
       - name: Checkout Repository
@@ -27,8 +27,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
       - name: Run Python Script
-        run: python add.py
+        run: python sum.py  # Ensure sum.py is compatible with Python 3
 
       - name: Inline Python Execution
         run: |
